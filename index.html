@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Battle City Clone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Thank You Screen -->
+  <div id="thankYouScreen" class="overlay">
+    <div class="thank-you-content">
+      <h1>Thank You For Playing!</h1>
+      <p>This is a Battle City inspired game</p>
+      <p>Created with ❤️ by dev sAgar</p>
+      <button id="continueBtn">Continue</button>
+    </div>
+  </div>
+  <!-- Start Screen -->
+  <div id="startScreen" class="overlay">
+    <h1>Battle City</h1>
+<div class="title-particle-rain">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+    <div class="title-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    
+    <p>Destroy All Enemies💥</p>
+    <p>Protect Your Base At All Costs🛡️</p>
+    <p> <strong>Good Luck!</strong> </p>
+    <p id="fullscreenMessage" style="color: #FF4500; text-shadow: 0 0 5px #FF4500; margin-top: 10px; display: none;">This game must be played in fullscreen mode!</p>
+    <button id="startBtn">Start Game</button>
+  </div>
+
+  <!-- Game Container -->
+  <div id="gameWrapper">
+    <div id="gameContainer">
+      <div id="gameTitle">BATTLE CITY</div>
+      <canvas id="gameCanvas" width="832" height="832"></canvas>
+      <div id="hud">
+        <span>Lives: <span id="lives">3</span></span>
+        <span>Enemies: <span id="enemyCount">0</span></span>
+        <span>Base: <span id="baseHealth">5</span></span>
+        <span>Score: <span id="score">0</span></span>
+        <span>Level: <span id="level">1</span></span>
+        <span id="pauseIndicator" class="hidden">PAUSED</span>
+      </div>
+      <div id="controlsIndicator">
+        <div class="section-title">CONTROLS:</div>
+        <div><span>Arrows:</span><span>Move</span></div>
+        <div><span>Tap Space:</span><span>Fire</span></div>
+        <div><span>Hold Space:</span><span>Rapid Fire</span></div>
+        <div><span><small>P:</small></span><span><small>Pause/Resume Game</small></span></div>
+      </div>
+      <button id="resetBtn" class="game-button">Reset Game</button>
+      
+      <div id="powerUpInfo">
+        <div class="section-title">POWER-UPS:</div>
+        <div><span class="power-green"><big>💚</big>:</span><span><small>+1 Life</small></span></div><br>
+        <div><span class="power-yellow"><big>🛡️</big>:</span><span><small>Player Shield (10s)</small></span></div><br>
+        <div><span class="power-blue"><big>🌀</big>:</span><span><small>Base Shield (10s)</small></span></div><br>
+        <div><span class="power-purple"><big>🔫</big>:</span><span><small>Magic Bullets (10s)</small></span></div>
+        
+        <div class="section-title" style="margin-top: 20px;">ACTIVE EFFECTS:</div>
+        <div id="activeEffects">
+          <!-- Power-up names will appear here dynamically -->
+        </div>
+      </div>
+      <div id="highScoreContainer">
+        <div class="section-title">HIGH SCORE</div>
+        <div id="highScoreDisplay">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameOverScreen" class="overlay hidden">
+    <div id="gameOverTitle">
+      <h1>Game Over</h1>
+    </div>
+    <div class="skull-icon"></div>
+    <p id="gameOverReason"></p>
+    <p>Final Score: <span id="finalScore">0</span></p>
+    <p>Level Reached: <span id="finalLevel">1</span></p>
+    <button id="restartBtn">Play Again</button>
+  </div>
+
+  <script src="game.js"></script>
+  
+  <!-- Audio Elements -->
+  <div id="audioElements" style="display:none;">
+    <audio id="shootSound" src="assets/audio/shoot.wav" preload="auto"></audio>
+    <audio id="playerHitSound" src="assets/audio/player_hit.wav" preload="auto"></audio>
+    <audio id="playerExplosionSound" src="assets/audio/player_explosion.wav" preload="auto"></audio>
+    <audio id="baseHitSound" src="assets/audio/base_hit.wav" preload="auto"></audio>
+    <audio id="baseExplosionSound" src="assets/audio/base_explosion.wav" preload="auto"></audio>
+    <audio id="enemyExplosionSound" src="assets/audio/enemy_explosion.wav" preload="auto"></audio>
+    <audio id="bulletImpactSound" src="assets/audio/bullet_impact.wav" preload="auto"></audio>
+    <audio id="powerupCollectSound" src="assets/audio/powerup_collect.wav" preload="auto"></audio>
+    <audio id="levelStartSound" src="assets/audio/level_start.wav" preload="auto"></audio>
+    <audio id="gameOverSound" src="assets/audio/game_over.wav" preload="auto"></audio>
+    <audio id="highScoreSound" src="assets/audio/high_score.wav" preload="auto"></audio>
+    <audio id="buttonClickSound" src="assets/audio/button_click.wav" preload="auto"></audio>
+    <audio id="pauseToggleSound" src="assets/audio/pause_toggle.wav" preload="auto"></audio>
+    <audio id="bgMusicSound" src="assets/audio/bg_music.wav" preload="auto" loop></audio>
+    <audio id="titleMusicSound" src="assets/audio/title_music.wav" preload="auto" loop></audio>
+  </div>
+  
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const startBtn = document.getElementById('startBtn');
+      const restartBtn = document.getElementById('restartBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const fullscreenMessage = document.getElementById('fullscreenMessage');
+      let gameActive = false;
+      
+      // Add fullscreen function
+      function enterFullscreen() {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) {
+          return elem.requestFullscreen().catch(err => {
+            console.error(`Error attempting to enable fullscreen: ${err.message}`);
+            return Promise.reject(err);
+          });
+        }
+        return Promise.resolve(); // Return a resolved promise if fullscreen API not available
+      }
+      
+      // Function to show start screen with message
+      function showStartScreenWithMessage() {
+        document.getElementById("gameWrapper").style.display = "none";
+        document.getElementById("gameOverScreen").classList.add("hidden");
+        document.getElementById("startScreen").classList.remove("hidden");
+        fullscreenMessage.style.display = "block";
+        
+        // Stop the game if it's running
+        if (typeof window.gameRunning !== 'undefined') {
+          window.gameRunning = false;
+        }
+      }
+      
+      // Listen for fullscreen change events - MERGED LISTENER
+      document.addEventListener('fullscreenchange', () => {
+        // Handle game state when exiting fullscreen
+        if (!document.fullscreenElement && gameActive) {
+          // User exited fullscreen during gameplay
+          gameActive = false;
+          showStartScreenWithMessage();
+        }
+        
+        // Always resize the game on fullscreen change
+        resizeGame();
+      });
+      
+      startBtn.addEventListener('click', () => {
+        if (typeof startGame === 'function') {
+          gameActive = true;
+          fullscreenMessage.style.display = "none";
+          // Play button click sound if audio system is initialized
+          if (typeof window.playSound === 'function') {
+            window.playSound('buttonClick');
+          }
+          // First enter fullscreen, then start the game
+          enterFullscreen().then(() => {
+            // Small delay to ensure fullscreen completes before starting game
+            setTimeout(() => {
+              startGame();
+            }, 100);
+          }).catch(() => {
+            // If fullscreen fails, still start the game
+            startGame();
+          });
+        }
+      });
+      
+      restartBtn.addEventListener('click', () => {
+        document.getElementById("gameWrapper").style.display = "block";
+        document.getElementById("gameOverScreen").classList.add("hidden");
+        if (typeof startGame === 'function') {
+          gameActive = true;
+          fullscreenMessage.style.display = "none";
+          // Play button click sound if audio system is initialized
+          if (typeof window.playSound === 'function') {
+            window.playSound('buttonClick');
+          }
+          // First enter fullscreen, then start the game
+          enterFullscreen().then(() => {
+            // Small delay to ensure fullscreen completes before starting game
+            setTimeout(() => {
+              startGame();
+            }, 100);
+          }).catch(() => {
+            // If fullscreen fails, still start the game
+            startGame();
+          });
+        }
+      });
+      
+      resetBtn.addEventListener('click', () => {
+        if (typeof initGame === 'function') {
+          // Play button click sound if audio system is initialized
+          if (typeof window.playSound === 'function') {
+            window.playSound('buttonClick');
+          }
+          initGame();
+        }
+      });
+      
+      // Improved window resize handler
+      function resizeGame() {
+        const gameWrapper = document.getElementById('gameWrapper');
+        const canvas = document.getElementById('gameCanvas');
+        
+        if (document.fullscreenElement) {
+          // In fullscreen mode, scale to fit while maintaining aspect ratio
+          const scale = Math.min(
+            window.innerWidth / 1032,
+            window.innerHeight / canvas.height
+          );
+          gameWrapper.style.transform = `scale(${scale})`;
+          gameWrapper.style.margin = 'auto';
+          
+          // Position HUD elements for fullscreen
+          positionHUDElements(true);
+        } else {
+          // Regular non-fullscreen behavior
+          const maxScale = Math.min(
+            window.innerWidth / 1032,
+            window.innerHeight / canvas.height
+          );
+          const scale = Math.min(maxScale * 0.95, 1.0);
+          gameWrapper.style.transform = `scale(${scale})`;
+          gameWrapper.style.margin = 'auto';
+          document.body.style.overflow = maxScale < 0.8 ? 'auto' : 'hidden';
+          
+          // Position HUD elements for windowed mode
+          positionHUDElements(false);
+        }
+      }
+      
+      // Function to properly position HUD elements based on fullscreen state
+      function positionHUDElements(isFullscreen) {
+        const hud = document.getElementById('hud');
+        const controlsIndicator = document.getElementById('controlsIndicator');
+        const powerUpInfo = document.getElementById('powerUpInfo');
+        const resetBtn = document.getElementById('resetBtn');
+        const highScoreContainer = document.getElementById('highScoreContainer');
+        
+        if (isFullscreen) {
+          // Fullscreen positioning
+          if (hud) hud.style.position = 'fixed';
+          if (controlsIndicator) controlsIndicator.style.position = 'fixed';
+          if (powerUpInfo) powerUpInfo.style.position = 'fixed';
+          if (resetBtn) resetBtn.style.position = 'fixed';
+          if (highScoreContainer) highScoreContainer.style.position = 'fixed';
+        } else {
+          // Windowed mode positioning
+          if (hud) hud.style.position = 'absolute';
+          if (controlsIndicator) controlsIndicator.style.position = 'absolute';
+          if (powerUpInfo) powerUpInfo.style.position = 'absolute';
+          if (resetBtn) resetBtn.style.position = 'absolute';
+          if (highScoreContainer) highScoreContainer.style.position = 'absolute';
+        }
+      }
+      
+      window.addEventListener('resize', resizeGame);
+      resizeGame();
+      
+      // Prevent space and arrow keys from scrolling the page
+      window.addEventListener('keydown', function(e) {
+        if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].indexOf(e.code) > -1) {
+          e.preventDefault();
+        }
+        
+        // Handle F11 key separately to ensure UI is properly repositioned
+        if(e.code === 'F11') {
+          if (gameActive) {
+            e.preventDefault(); // Prevent default F11 behavior 
+            // If game is active and user tries to exit with F11, show message
+            if (document.fullscreenElement) {
+              gameActive = false;
+              document.exitFullscreen().then(() => {
+                showStartScreenWithMessage();
+              });
+            }
+          }
+          
+          // Give the browser a moment to complete the fullscreen toggle
+          setTimeout(() => {
+            resizeGame();
+          }, 100);
+        }
+      }, false);
+    });
+  </script>
+</body>
+</html>

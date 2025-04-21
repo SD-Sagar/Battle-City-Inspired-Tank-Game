@@ -1,0 +1,29 @@
+Minimum System Requirements:
+CPU: Dual-core processor (2.0 GHz or higher)
+
+RAM: 2GB or more
+
+GPU: Integrated graphics (Intel HD Graphics 4000 or equivalent)
+
+Browser: Latest version of Chrome, Firefox, Edge, or Safari
+
+Storage: 50MB free space (for assets and caching)
+
+OS: Windows 7+, macOS 10.12+, or modern Linux distribution
+
+Screen Resolution: 1024x768 or higher
+
+Recommended System Requirements:
+CPU: Quad-core processor (2.5 GHz or higher)
+
+RAM: 4GB or more
+
+GPU: Dedicated graphics card (NVIDIA GTX 660 / AMD Radeon HD 7870 or better)
+
+Browser: Latest version of Chrome or Firefox (hardware acceleration enabled)
+
+Storage: 100MB free space
+
+OS: Windows 10+, macOS 11+, or modern Linux distribution
+
+Screen Resolution: 1366x768 or higher
