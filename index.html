@@ -225,9 +225,18 @@
       function resizeGame() {
         const gameWrapper = document.getElementById('gameWrapper');
         
-        // Base dimensions of the game container layout
-        const baseWidth = 1350;
-        const baseHeight = 900;
+        let baseWidth, baseHeight;
+        
+        // Switch layout based on orientation
+        if (window.innerWidth < window.innerHeight) {
+          baseWidth = 850;
+          baseHeight = 1550; // Taller base height for stacked UI
+          document.body.classList.add('mobile-layout');
+        } else {
+          baseWidth = 1350;
+          baseHeight = 900;
+          document.body.classList.remove('mobile-layout');
+        }
         
         // Calculate scale to fit the window while maintaining aspect ratio
         const scaleX = window.innerWidth / baseWidth;

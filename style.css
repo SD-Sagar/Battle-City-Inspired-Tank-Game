@@ -1191,3 +1191,116 @@ button:active {
 }
 
 /* Responsive layout relies entirely on transform: scale now */
+
+/* Mobile Layout Styles (triggered by JS in portrait orientation) */
+.mobile-layout #gameContainer {
+  width: 850px;
+  height: 1550px;
+  justify-content: flex-start;
+  padding-top: 20px;
+  gap: 15px;
+}
+
+.mobile-layout #gameTitle {
+  position: relative;
+  margin-bottom: 0;
+  order: 1;
+}
+
+.mobile-layout #hud {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 832px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  order: 2;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.mobile-layout #powerUpInfo {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 832px;
+  order: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.mobile-layout #powerUpInfo br {
+  display: none;
+}
+.mobile-layout #powerUpInfo .section-title {
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.mobile-layout #activeEffects {
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mobile-layout #controlsIndicator {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 832px;
+  order: 4;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.mobile-layout #controlsIndicator .section-title {
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.mobile-layout #highScoreContainer {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 832px;
+  order: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+.mobile-layout #highScoreContainer .section-title {
+  margin: 0;
+  border-bottom: none;
+}
+.mobile-layout #highScoreDisplay {
+  margin-top: 0;
+}
+
+.mobile-layout #resetBtn {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: auto;
+  padding: 15px 40px;
+  order: 6;
+  margin: 0;
+}
+
+.mobile-layout #gameCanvas {
+  order: 10;
+  margin-top: 10px;
+}
