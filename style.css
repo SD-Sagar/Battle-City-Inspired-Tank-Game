@@ -1195,9 +1195,9 @@ button:active {
 /* Mobile Layout Styles (triggered by JS in portrait orientation) */
 .mobile-layout #gameContainer {
   width: 850px;
-  height: 1550px;
-  justify-content: flex-start;
-  padding-top: 20px;
+  height: 1300px;
+  justify-content: center;
+  padding-top: 10px;
   gap: 15px;
 }
 
@@ -1220,12 +1220,17 @@ button:active {
   box-sizing: border-box;
 }
 
+.mobile-layout #gameCanvas {
+  order: 3;
+  margin-top: 0;
+}
+
 .mobile-layout #powerUpInfo {
   position: relative;
   top: auto;
   left: auto;
   width: 832px;
-  order: 3;
+  order: 4;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -1255,7 +1260,7 @@ button:active {
   top: auto;
   right: auto;
   width: 832px;
-  order: 4;
+  order: 5;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -1274,7 +1279,7 @@ button:active {
   top: auto;
   left: auto;
   width: 832px;
-  order: 5;
+  order: 6;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1296,11 +1301,6 @@ button:active {
   left: auto;
   width: auto;
   padding: 15px 40px;
-  order: 6;
+  order: 7;
   margin: 0;
-}
-
-.mobile-layout #gameCanvas {
-  order: 10;
-  margin-top: 10px;
 }
