@@ -224,58 +224,24 @@
       // Improved window resize handler
       function resizeGame() {
         const gameWrapper = document.getElementById('gameWrapper');
-        const canvas = document.getElementById('gameCanvas');
         
-        if (document.fullscreenElement) {
-          // In fullscreen mode, scale to fit while maintaining aspect ratio
-          const scale = Math.min(
-            window.innerWidth / 1032,
-            window.innerHeight / canvas.height
-          );
-          gameWrapper.style.transform = `scale(${scale})`;
-          gameWrapper.style.margin = 'auto';
-          
-          // Position HUD elements for fullscreen
-          positionHUDElements(true);
-        } else {
-          // Regular non-fullscreen behavior
-          const maxScale = Math.min(
-            window.innerWidth / 1032,
-            window.innerHeight / canvas.height
-          );
-          const scale = Math.min(maxScale * 0.95, 1.0);
-          gameWrapper.style.transform = `scale(${scale})`;
-          gameWrapper.style.margin = 'auto';
-          document.body.style.overflow = maxScale < 0.8 ? 'auto' : 'hidden';
-          
-          // Position HUD elements for windowed mode
-          positionHUDElements(false);
-        }
-      }
-      
-      // Function to properly position HUD elements based on fullscreen state
-      function positionHUDElements(isFullscreen) {
-        const hud = document.getElementById('hud');
-        const controlsIndicator = document.getElementById('controlsIndicator');
-        const powerUpInfo = document.getElementById('powerUpInfo');
-        const resetBtn = document.getElementById('resetBtn');
-        const highScoreContainer = document.getElementById('highScoreContainer');
+        // Base dimensions of the game container layout
+        const baseWidth = 1350;
+        const baseHeight = 900;
         
-        if (isFullscreen) {
-          // Fullscreen positioning
-          if (hud) hud.style.position = 'fixed';
-          if (controlsIndicator) controlsIndicator.style.position = 'fixed';
-          if (powerUpInfo) powerUpInfo.style.position = 'fixed';
-          if (resetBtn) resetBtn.style.position = 'fixed';
-          if (highScoreContainer) highScoreContainer.style.position = 'fixed';
-        } else {
-          // Windowed mode positioning
-          if (hud) hud.style.position = 'absolute';
-          if (controlsIndicator) controlsIndicator.style.position = 'absolute';
-          if (powerUpInfo) powerUpInfo.style.position = 'absolute';
-          if (resetBtn) resetBtn.style.position = 'absolute';
-          if (highScoreContainer) highScoreContainer.style.position = 'absolute';
-        }
+        // Calculate scale to fit the window while maintaining aspect ratio
+        const scaleX = window.innerWidth / baseWidth;
+        const scaleY = window.innerHeight / baseHeight;
+        const scale = Math.min(scaleX, scaleY) * 0.98; // Leave a tiny margin
+        
+        gameWrapper.style.transform = `scale(${scale})`;
+        gameWrapper.style.transformOrigin = 'center center';
+        gameWrapper.style.display = 'flex';
+        gameWrapper.style.justifyContent = 'center';
+        gameWrapper.style.alignItems = 'center';
+        
+        // Ensure body doesn't show scrollbars
+        document.body.style.overflow = 'hidden';
       }
       
       window.addEventListener('resize', resizeGame);

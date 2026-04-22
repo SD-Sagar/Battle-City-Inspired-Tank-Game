@@ -64,31 +64,7 @@
               0 2px 0 #2E7D32;
 }
 
-/* Fullscreen styles */
-:fullscreen #gameContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: #000;
-}
-
-:fullscreen #gameCanvas {
-  max-height: 100vh;
-  max-width: 100vw;
-  object-fit: contain;
-}
-
-/* Keep the HUD visible in fullscreen */
-:fullscreen #hud,
-:fullscreen #controlsIndicator,
-:fullscreen #powerUpInfo,
-:fullscreen #resetBtn {
-  position: fixed;
-  z-index: 100;
-}
-
+/* Fullscreen styles handled by transform scale */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -119,11 +95,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
-  width: 1032px;
+  width: 1350px;
+  height: 900px;
   margin: 0 auto;
-  padding: 0 240px; /* Add padding to accommodate side panels */
+  padding: 0;
 }
 
 body {
@@ -1212,92 +1190,4 @@ button:active {
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-  #startScreen h1, #gameOverScreen h1 {
-    font-size: 32px;
-  }
-  
-  #startScreen p, #gameOverScreen p {
-    font-size: 14px;
-  }
-  
-  #hud {
-    font-size: 12px;
-    padding: 8px;
-    width: 180px;
-    right: -180px;
-  }
-
-  #controlsIndicator {
-    font-size: 12px;
-    padding: 10px;
-    width: 180px;
-    right: -180px;
-    top: 200px;
-  }
-
-  /* Level Complete Message */
-.level-message {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -60%);
-  font-size: 32px;
-  color: #FFD700;
-  text-shadow: 3px 3px 0 #8B8000, 5px 5px 0 #000;
-  letter-spacing: 3px;
-  white-space: nowrap;
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-.level-message {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -60%);
-    font-size: 48px;
-    color: #FFD700;
-    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 3px 3px 0 #000;
-    letter-spacing: 3px;
-    text-align: center;
-    opacity: 0;
-    z-index: 100;
-    pointer-events: none;
-    animation: messageFade 2s ease-out;
-    width: 100%;
-    padding: 0 20px;
-    box-sizing: border-box;
-}
-
-@keyframes messageFade {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
-    20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-    80% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.3); }
-}
-
-#resetBtn {
-    left: -180px;
-    width: 180px;
-    font-size: 12px;
-    padding: 10px;
-  }
-
-  #powerUpInfo {
-    left: -180px;
-    width: 180px;
-    font-size: 12px;
-    padding: 10px;
-  }
-}
-
-@media (max-height: 700px) {
-  #gameWrapper {
-    transform: scale(0.8) !important;
-  }
-  body {
-    overflow-y: auto;
-  }
-}
+/* Responsive layout relies entirely on transform: scale now */
