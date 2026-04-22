@@ -243,11 +243,20 @@
         const scaleY = window.innerHeight / baseHeight;
         const scale = Math.min(scaleX, scaleY) * 0.98; // Leave a tiny margin
         
+        // Fix flexbox overflow alignment bug by scaling from the top and manually centering
         gameWrapper.style.transform = `scale(${scale})`;
-        gameWrapper.style.transformOrigin = 'center center';
+        gameWrapper.style.transformOrigin = 'top center';
+        
+        // Force body to align at the top so our margin calculations work perfectly
+        document.body.style.alignItems = 'flex-start';
+        
+        // Manually calculate the centered position
+        const visualHeight = baseHeight * scale;
+        const topMargin = Math.max(0, (window.innerHeight - visualHeight) / 2);
+        gameWrapper.style.marginTop = `${topMargin}px`;
+        
         gameWrapper.style.display = 'flex';
         gameWrapper.style.justifyContent = 'center';
-        gameWrapper.style.alignItems = 'center';
         
         // Ensure body doesn't show scrollbars
         document.body.style.overflow = 'hidden';
